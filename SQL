@@ -1,0 +1,6 @@
+select events.merlin_id, events.merlin_id_type, events.match_type, events.search_term, events.is_t9_search, events.position, events.device.receiver_id as receiver_id, events.account.xbo_id as xbo_id, events.hour, events.day, events.month, events.year, programs.title, programs.category
+FROM udb.x1_search_raw events
+left JOIN augeas.program programs 
+ON programs.id = events.merlin_id
+where events.status="SUCCESS"
+and events.year=2017 and events.month=01 and events.day between 01 and 10
