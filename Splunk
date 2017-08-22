@@ -1,0 +1,10 @@
+|set union [search index=xcal_distinct_search sourcetype=XCal-Search-ChannelChange-Wavg | 
+eval Date=strftime(_time, "%m/%d/%Y") |
+eval isT9="T9"|
+eval SearchType="Channel Change"|
+TABLE Date _time SearchType searchProduct isT9 count AVG]
+[search index=xcal_distinct_search source=XCal-Search-Undefined-Wavg | 
+eval Date=strftime(_time, "%m/%d/%Y") |
+eval SearchType="Entity Click-Thru"|
+stats sum(count) as count by Date _time SearchType searchProduct isT9 AVG]|
+table Date _time SearchType searchProduct isT9 count AVG
